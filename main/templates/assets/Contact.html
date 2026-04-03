@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="contact-container">
+    <div class="contact-grid">
+        <div class="contact-info glass">
+            <h2>Initiate Communication</h2>
+            <p>Direct your inquiries for freelance collaborations or AI/ML research opportunities here.</p>
+            <div class="info-item">
+                <i class="fas fa-envelope neon-text"></i>
+                <span>YourEmail@example.com</span>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-location-arrow neon-text"></i>
+                <span>Currently: Pakistan | Target: Germany</span>
+            </div>
+        </div>
+
+        <div class="contact-form-wrapper glass">
+            <form method="POST" action="{% url 'contact_submit' %}" class="neo-form">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="text" name="name" required placeholder="Full Name">
+                </div>
+                <div class="form-group">
+                    <input type="email" name="email" required placeholder="Email Address">
+                </div>
+                <div class="form-group">
+                    <select name="subject">
+                        <option value="freelance">Freelance Inquiry</option>
+                        <option value="collaboration">Project Collaboration</option>
+                        <option value="other">General Query</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <textarea name="message" rows="5" required placeholder="Transmission Content..."></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Send Transmission</button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

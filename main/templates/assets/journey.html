@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="journey-header">
+    <h1 class="neon-text">Mission Log: My Journey</h1>
+    <p>A chronological archive of academic progress and freelance milestones.</p>
+</section>
+
+<div class="timeline-container">
+    {% for post in journey_posts %}
+    <div class="timeline-item glass">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">{{ post.date|date:"F Y" }}</div>
+        <div class="timeline-content">
+            <h3>{{ post.title }}</h3>
+            <span class="category-tag">{{ post.category }}</span>
+            <div class="blog-text">
+                {{ post.content|linebreaks }}
+            </div>
+            {% if post.image %}
+                <img src="{{ post.image.url }}" alt="Milestone Image" class="journey-img">
+            {% endif %}
+        </div>
+    </div>
+    {% empty %}
+    <div class="glass empty-notice">The archives are currently empty. Initializing data...</div>
+    {% endfor %}
+</div>
+{% endblock %}

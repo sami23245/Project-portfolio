@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="section-container">
+    <div class="page-header">
+        <h1 class="neon-text">Project Archives</h1>
+        <div class="search-wrapper glass">
+            <i class="fas fa-search"></i>
+            <input type="text" id="projectSearch" placeholder="Filter by keyword (e.g., 'E-commerce', 'Calculator')..." onkeyup="filterProjects()">
+        </div>
+    </div>
+
+    <div class="project-grid" id="projectGrid">
+        {% for project in projects %}
+        <div class="project-card glass" data-keywords="{{ project.title|lower }} {{ project.tags|lower }}">
+            <div class="card-inner">
+                <div class="project-info">
+                    <span class="project-id">#0{{ forloop.counter }}</span>
+                    <h3>{{ project.title }}</h3>
+                    <div class="rating">
+                        {% for i in "12345" %}
+                        <i class="fa{% if forloop.counter <= project.rating %}-solid{% else %}-regular{% endif %} fa-star"></i>
+                        {% endfor %}
+                    </div>
+                    <p>{{ project.description }}</p>
+                </div>
+                
+                <div class="project-actions">
+                    <a href="{{ project.demo_url }}" class="btn-neon" target="_blank">Live Demo</a>
+                    <button class="btn-outline" onclick="openFeedback('{{ project.id }}')">Reviews</button>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="glass empty-state">No projects synced. Awaiting backend data...</div>
+        {% endfor %}
+    </div>
+</section>
+
+<script>
+    function filterProjects() {
+        let input = document.getElementById('projectSearch').value.toLowerCase();
+        let cards = document.getElementsByClassName('project-card');
+        
+        for (let card of cards) {
+            let keywords = card.getAttribute('data-keywords');
+            card.style.display = keywords.includes(input) ? "block" : "none";
+        }
+    }
+</script>
+{% endblock %}

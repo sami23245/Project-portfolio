@@ -12,7 +12,7 @@
     <div class="background-overlay"></div>
     
     <nav class="navbar glass">
-        <div class="logo">SAMI.EXE</div>
+        <div class="logo"><button class="theme-toggle"onclick="toggleTheme()">🌓</button></div>
         <ul class="nav-links">
             <li><a href="{% url 'home' %}">Home</a></li>
             <li><a href="{% url 'projects' %}">Projects</a></li>
@@ -28,4 +28,16 @@
 
     <script src="{% static 'main/js/script.js' %}"></script>
 </body>
+    <footer class="main-footer glass">
+        <div class="footer-content">
+            <div class="footer-logo">SAMI.EXE</div>
+            <div class="social-handles">
+                <a href="https://github.com/yourusername" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://linkedin.com/in/yourusername" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="https://fiverr.com/yourusername" target="_blank"><span class="fiverr-icon">Fi.</span></a>
+                <a href="https://upwork.com/yourusername" target="_blank"><i class="fab fa-upwork"></i></a>
+            </div>
+            <p class="copyright">© 2026 Sami Khan // System Version 1.0</p>
+        </div>
+    </footer>
 </html>
