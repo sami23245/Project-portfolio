@@ -202,52 +202,78 @@ body {
 
 
 /* ==========================================================================
-   6. SUMMARY MATRIX & STABLE BACKGROUND (Compact Version)
+   SUMMARY MATRIX - FINAL STYLING
    ========================================================================== */
-.matrix-parallax-container {
-    position: relative;
-    width: 100%;
-    background-image: url('../images/matrix-bg.jpg'); 
-    background-attachment: scroll; 
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-
-.matrix-overlay {
-    width: 100%;
-    background: rgba(0, 0, 0, 0.7); 
-    padding: 60px 0; /* Reduced vertical padding for the whole section */
-}
 
 .summary-matrix {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem; /* Reduced gap between cards */
-    padding: 0 10%;
+    /* This creates 3 equal columns on desktop */
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 2rem;
+    padding: 60px 10%;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
 .matrix-card {
-    padding: 2.5rem 1.5rem; /* Reduced internal padding for a tighter look */
+    padding: 3rem 2rem;
     text-align: center;
-    border-radius: 20px;
+    border-radius: 24px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: 380px; /* Reduced minimum height */
-    transition: transform 0.3s ease;
+    justify-content: space-between; /* Keeps button at the bottom */
+    min-height: 400px; /* Balanced height */
+    transition: transform 0.4s ease, border-color 0.4s ease;
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.matrix-card p {
-    margin-bottom: 1.5rem; /* Reduced gap between text and button */
-    font-size: 0.95rem;
+.matrix-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--accent);
+    background: rgba(255, 255, 255, 0.02); /* Subtle highlight */
 }
 
 .matrix-icon {
-    font-size: 2rem;
+    font-size: 2.5rem;
     color: var(--accent);
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 }
+
+.matrix-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-main);
+}
+
+.matrix-card p {
+    font-size: 1rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    flex-grow: 1; /* Pushes button down if text is short */
+}
+
+/* Button sizing for inside cards */
+.matrix-card .btn-action {
+    width: 100%;
+    padding: 12px 0;
+    font-size: 0.9rem;
+    border-radius: 12px;
+}
+
+/* RESPONSIVE: Stack cards on mobile */
+@media (max-width: 1024px) {
+    .summary-matrix {
+        grid-template-columns: 1fr;
+        padding: 40px 5%;
+    }
+    
+    .matrix-card {
+        min-height: auto;
+    }
+}
+
 
 /* ==========================================================================
    7. RESPONSIVE DESIGN

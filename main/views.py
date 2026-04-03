@@ -19,4 +19,4 @@ def journey_view(request):
 
 
 def contact_view(request):
-    return render(request, 'assets/contact.html')
+    return render(request, 'assets/Contact.html')
