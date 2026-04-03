@@ -100,6 +100,92 @@ body {
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--border);
 }
+/* ==========================================================================
+   3. NAVIGATION (GLASSMORPHISM)
+   ========================================================================== */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    /* Shape and Position */
+    width: 90%;            /* This "cuts" the sides */
+    max-width: 1200px;     /* Prevents it from getting too wide on large screens */
+    margin: 20px auto;     /* Centers it and pushes it down from the top */
+    padding: 0.8rem 3rem;
+    border-radius: 50px;   /* Creates the pill shape */
+    
+    /* Glassmorphism & Behavior */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;              /* Required for margin: auto to work with fixed positioning */
+    z-index: 2000;
+    background: rgba(15, 15, 20, 0.8);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+}
+
+.nav-logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-main);
+    text-decoration: none;
+    letter-spacing: -1px;
+}
+
+.nav-logo span {
+    color: var(--accent); /* Your Cyber Orange */
+}
+
+.nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--accent);
+    text-shadow: 0 0 10px rgba(255, 107, 0, 0.3);
+}
+
+/* Active Link State */
+.nav-links a.active {
+    color: var(--text-main);
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 5px;
+}
+
+/* Mobile Responsive Navbar */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 1rem 5%;
+    }
+    .nav-links {
+        display: none; /* Usually replaced by a burger menu on mobile */
+    }
+}
+
+
+/* Optional: Slight shrink effect on scroll (if you add JS later) */
+.navbar.scrolled {
+    width: 85%;
+    margin-top: 10px;
+    background: rgba(10, 10, 12, 0.95);
+}
 
 /* ==========================================================================
    4. BANNER HERO SECTION
@@ -199,8 +285,27 @@ body {
     border-radius: 20px;
     box-shadow: 0 0 10px var(--accent);
 }
+/* ============================ */
+/* do not delete this comment, it is used as a reference point for code insertion in the future */
+/* ============================ */
+.skill-item {
+    margin-bottom: 2rem; /* Adds space between the different bars */
+}
 
+.skill-info {
+    display: flex;
+    justify-content: space-between; /* Pushes Name to left, % to right */
+    align-items: center;
+    margin-bottom: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
 
+/* Optional: Make the percentage stand out */
+.skill-info span:last-child {
+    color: var(--accent);
+    font-family: 'Courier New', Courier, monospace; /* Tech look */
+}
 /* ==========================================================================
    SUMMARY MATRIX - FINAL STYLING
    ========================================================================== */
