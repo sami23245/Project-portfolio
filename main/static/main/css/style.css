@@ -40,6 +40,11 @@ body {
     overflow-x: hidden;
 }
 
+/* --- GLOBAL LAYOUT FIX --- */
+body {
+    /* Adjust '80px' to match the actual height of your Navbar */
+    padding-top: 80px; 
+}
 /* ==========================================================================
    2. REUSABLE COMPONENTS
    ========================================================================== */

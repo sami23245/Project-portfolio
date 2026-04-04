@@ -6,7 +6,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 class Project(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
-    image = models.ImageField(upload_to='projects/')
+    image = models.ImageField(upload_to='projects/static/projects/images/')
     tech_stack = models.CharField(max_length=300, help_text="e.g. Django, Python, MySQL")
     github_link = models.URLField(blank=True)
     live_link = models.URLField(blank=True)

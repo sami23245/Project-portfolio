@@ -2,67 +2,42 @@
 {% load static %}
 
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'main/projects/css/projects.css' %}">
+<link rel="stylesheet" href="{% static 'projects/css/project_gallery.css' %}">
 {% endblock %}
 
 {% block content %}
-<main class="projects-page">
-    <section class="projects-hero">
-        <h1 class="section-title">PROJECT <span class="accent-text">ARCHIVE</span></h1>
-        <p class="subtitle">A collection of automated systems, AI experiments, and backend architectures.</p>
-    </section>
+<div class="container mt-5 pt-5">
+    <div class="gallery-header mb-5">
+        <h1 class="text-orange text-uppercase">Project Archive</h1>
+        <p class="text-light opacity-75">A collection of automated systems and backend architectures.</p>
+    </div>
 
-    <div class="projects-container">
-        <section class="project-grid">
-            {% for project in projects %}
-            <div class="project-card glass">
-                <div class="project-img-wrapper">
+    <div class="project-masonry-grid">
+        
+        {% for project in projects %}
+
+            <div class="project-card glass-card {% if forloop.counter|divisibleby:3 %}wide{% elif forloop.counter|divisibleby:5 %}tall{% endif %}">
+                
+                <div class="card-image-wrapper">
                     {% if project.image %}
-                        <img src="{{ project.image.url }}" alt="{{ project.title }}">
-                    {% else %}
-                        <img src="{% static 'main/projects/images/default-project.jpg' %}" alt="Default">
+                        <img src="{{ project.image.url }}" alt="{{ project.title }}" class="project-img">
                     {% endif %}
-                    <div class="project-overlay">
-                        <div class="tech-tags">
-                            {% for tag in project.tech_stack.split %}
-                                <span class="tag">{{ tag }}</span>
-                            {% endfor %}
-                        </div>
+                    <div class="card-overlay">
+                        <a href="{% url 'project_detail' project.pk %}" class="btn-cyber-orange">View Details</a>
                     </div>
+                </div>
+
+                <div class="card-content">
+                    <h3 class="text-orange">{{ project.title }}</h3>
+                    <p class="text-light small">{{ project.description|truncatewords:15 }}</p>
                 </div>
                 
-                <div class="project-info">
-                    <div class="project-meta">
-                        <h3>{{ project.title }}</h3>
-                        <div class="star-rating">
-                            {% for i in "12345" %}
-                                <i class="fa{% if forloop.counter <= project.average_rating %}s{% else %}r{% endif %} fa-star"></i>
-                            {% endfor %}
-                            <span class="rating-num">({{ project.average_rating|floatformat:1 }})</span>
-                        </div>
-                    </div>
-                    
-                    <p class="project-desc">{{ project.description|truncatewords:20 }}</p>
-                    
-                    <div class="project-footer">
-                        <div class="project-links">
-                            {% if project.github_link %}
-                                <a href="{{ project.github_link }}" target="_blank" class="link-icon"><i class="fab fa-github"></i></a>
-                            {% endif %}
-                            {% if project.live_link %}
-                                <a href="{{ project.live_link }}" target="_blank" class="link-icon"><i class="fas fa-external-link-alt"></i></a>
-                            {% endif %}
-                        </div>
-                        <a href="#!" class="btn-details">Full Report ></a>
-                    </div>
-                </div>
             </div>
-            {% empty %}
-            <div class="no-projects">
-                <p>No projects found in the archive. Check back soon!</p>
+        {% empty %}
+            <div class="glass-card p-5 text-center">
+                <p class="text-muted">No projects found in the archive. Check back soon!</p>
             </div>
-            {% endfor %}
-        </section>
+        {% endfor %}
     </div>
-</main>
+</div>
 {% endblock %}

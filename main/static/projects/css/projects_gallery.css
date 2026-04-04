@@ -1,0 +1,62 @@
+/* --- GRID ARCHITECTURE --- */
+.project-masonry-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-auto-rows: 250px; /* Base height unit */
+    grid-gap: 20px;
+    grid-auto-flow: dense; /* Fills in gaps automatically */
+}
+
+/* --- CARD SPANNING LOGIC --- */
+/* Wide cards take up two columns */
+.project-card.wide {
+    grid-column: span 2;
+}
+
+/* Tall cards take up two rows */
+.project-card.tall {
+    grid-row: span 2;
+}
+
+/* --- IMAGE SCALING --- */
+.card-image-wrapper {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 15px 15px 0 0;
+}
+
+.project-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Prevents stretching in different card sizes */
+    transition: transform 0.5s ease;
+}
+
+/* --- INTERACTIVE OVERLAY --- */
+.card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: 0.3s ease;
+}
+
+.project-card:hover .card-overlay {
+    opacity: 1;
+}
+
+.project-card:hover .project-img {
+    transform: scale(1.1);
+}
+
+.card-content {
+    padding: 20px;
+}

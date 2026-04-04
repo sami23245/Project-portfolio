@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'projects/css/project_detail_style.css' %}">
+{% endblock  %}
+
+{% block content %}
+<div class="container mt-5 pt-5"> 
+    <div class="glass-card p-5">
+        <h1 class="text-orange text-uppercase">{{ project.title }}</h1>
+        
+        
+        <div class="row">
+            <div class="col-md-6">
+                {% if project.image %}
+                <img src="{{ project.image.url }}" class="img-fluid rounded border-glow" alt="{{ project.title }}">
+                {% endif %}
+            </div>
+            <div class="col-md-6">
+                <h3 class="text-orange">Project Intelligence</h3>
+                <p class="lead text-light">{{ project.description }}</p>
+                <div class="tech-stack mt-3">
+                    <span class="badge badge-outline-orange">Backend: Django</span>
+                    <span class="badge badge-outline-orange">Database: MySQL</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass-card p-4 mb-5">
+        <h4 class="text-orange mb-4">Post a Review</h4>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="text-light">Name</label>
+                    {{ form.user_name }}
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="text-light">Rating (1-5)</label>
+                    {{ form.rating }}
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="text-light">Comment</label>
+                {{ form.comment }}
+            </div>
+            <button type="submit" class="btn btn-cyber-orange w-100">SUBMIT DATA</button>
+        </form>
+    </div>
+
+    <div class="reviews-section">
+        <h4 class="text-light mb-4">Feedback Archive</h4>
+        {% for review in project.reviews.all %}
+        <div class="glass-card p-3 mb-3 border-left-orange">
+            <div class="d-flex justify-content-between">
+                <strong class="text-orange">{{ review.user_name }}</strong>
+                <span class="stars">
+                    {% for i in "12345" %}
+                        {% if forloop.counter <= review.rating %}
+                            <i class="fas fa-star text-orange"></i>
+                        {% else %}
+                            <i class="far fa-star text-muted"></i>
+                        {% endif %}
+                    {% endfor %}
+                </span>
+            </div>
+            <p class="text-light mt-2 mb-0 italic">"{{ review.comment }}"</p>
+        </div>
+        {% empty %}
+        <p class="text-muted">No feedback data found for this entry.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

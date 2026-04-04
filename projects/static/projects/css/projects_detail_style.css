@@ -1,0 +1,59 @@
+/* Glass Card Base */
+
+/* --- SECTION SPACING --- */
+.content-wrapper {
+    margin-top: 100px; /* Gives extra room for the Cyber-Title */
+}
+.glass-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* Cyber Accents */
+.text-orange {
+    color: #ff8c00 !important;
+    text-shadow: 0 0 10px rgba(255, 140, 0, 0.5);
+}
+
+.cyber-line {
+    border-top: 2px solid #ff8c00;
+    width: 50px;
+    margin-bottom: 25px;
+}
+
+.border-glow {
+    border: 1px solid #ff8c00;
+    box-shadow: 0 0 15px rgba(255, 140, 0, 0.2);
+}
+
+/* Form Styling */
+.form-control {
+    background: rgba(0, 0, 0, 0.2) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    color: white !important;
+}
+
+.form-control:focus {
+    border-color: #ff8c00 !important;
+    box-shadow: 0 0 8px rgba(255, 140, 0, 0.4) !important;
+}
+
+/* Button */
+.btn-cyber-orange {
+    background: transparent;
+    border: 2px solid #ff8c00;
+    color: #ff8c00;
+    font-weight: bold;
+    transition: 0.3s;
+    letter-spacing: 2px;
+}
+
+.btn-cyber-orange:hover {
+    background: #ff8c00;
+    color: #000;
+    box-shadow: 0 0 20px #ff8c00;
+}
