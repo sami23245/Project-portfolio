@@ -1,52 +1,68 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block content %}
-<section class="section-container">
-    <div class="page-header">
-        <h1 class="neon-text">Project Archives</h1>
-        <div class="search-wrapper glass">
-            <i class="fas fa-search"></i>
-            <input type="text" id="projectSearch" placeholder="Filter by keyword (e.g., 'E-commerce', 'Calculator')..." onkeyup="filterProjects()">
-        </div>
-    </div>
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'main/projects/css/projects.css' %}">
+{% endblock %}
 
-    <div class="project-grid" id="projectGrid">
-        {% for project in projects %}
-        <div class="project-card glass" data-keywords="{{ project.title|lower }} {{ project.tags|lower }}">
-            <div class="card-inner">
-                <div class="project-info">
-                    <span class="project-id">#0{{ forloop.counter }}</span>
-                    <h3>{{ project.title }}</h3>
-                    <div class="rating">
-                        {% for i in "12345" %}
-                        <i class="fa{% if forloop.counter <= project.rating %}-solid{% else %}-regular{% endif %} fa-star"></i>
-                        {% endfor %}
+{% block content %}
+<main class="projects-page">
+    <section class="projects-hero">
+        <h1 class="section-title">PROJECT <span class="accent-text">ARCHIVE</span></h1>
+        <p class="subtitle">A collection of automated systems, AI experiments, and backend architectures.</p>
+    </section>
+
+    <div class="projects-container">
+        <section class="project-grid">
+            {% for project in projects %}
+            <div class="project-card glass">
+                <div class="project-img-wrapper">
+                    {% if project.image %}
+                        <img src="{{ project.image.url }}" alt="{{ project.title }}">
+                    {% else %}
+                        <img src="{% static 'main/projects/images/default-project.jpg' %}" alt="Default">
+                    {% endif %}
+                    <div class="project-overlay">
+                        <div class="tech-tags">
+                            {% for tag in project.tech_stack.split %}
+                                <span class="tag">{{ tag }}</span>
+                            {% endfor %}
+                        </div>
                     </div>
-                    <p>{{ project.description }}</p>
                 </div>
                 
-                <div class="project-actions">
-                    <a href="{{ project.demo_url }}" class="btn-neon" target="_blank">Live Demo</a>
-                    <button class="btn-outline" onclick="openFeedback('{{ project.id }}')">Reviews</button>
+                <div class="project-info">
+                    <div class="project-meta">
+                        <h3>{{ project.title }}</h3>
+                        <div class="star-rating">
+                            {% for i in "12345" %}
+                                <i class="fa{% if forloop.counter <= project.average_rating %}s{% else %}r{% endif %} fa-star"></i>
+                            {% endfor %}
+                            <span class="rating-num">({{ project.average_rating|floatformat:1 }})</span>
+                        </div>
+                    </div>
+                    
+                    <p class="project-desc">{{ project.description|truncatewords:20 }}</p>
+                    
+                    <div class="project-footer">
+                        <div class="project-links">
+                            {% if project.github_link %}
+                                <a href="{{ project.github_link }}" target="_blank" class="link-icon"><i class="fab fa-github"></i></a>
+                            {% endif %}
+                            {% if project.live_link %}
+                                <a href="{{ project.live_link }}" target="_blank" class="link-icon"><i class="fas fa-external-link-alt"></i></a>
+                            {% endif %}
+                        </div>
+                        <a href="#!" class="btn-details">Full Report ></a>
+                    </div>
                 </div>
             </div>
-        </div>
-        {% empty %}
-        <div class="glass empty-state">No projects synced. Awaiting backend data...</div>
-        {% endfor %}
+            {% empty %}
+            <div class="no-projects">
+                <p>No projects found in the archive. Check back soon!</p>
+            </div>
+            {% endfor %}
+        </section>
     </div>
-</section>
-
-<script>
-    function filterProjects() {
-        let input = document.getElementById('projectSearch').value.toLowerCase();
-        let cards = document.getElementsByClassName('project-card');
-        
-        for (let card of cards) {
-            let keywords = card.getAttribute('data-keywords');
-            card.style.display = keywords.includes(input) ? "block" : "none";
-        }
-    }
-</script>
+</main>
 {% endblock %}
