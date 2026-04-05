@@ -10,8 +10,6 @@ def home_view(request):
     return render(request, 'assets/home.html')
 
 
-def projects_view(request):
-    return render(request, 'assets/projects.html')
 
 
 def journey_view(request):
