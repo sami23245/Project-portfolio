@@ -7,16 +7,16 @@ def home(request):#for testing and view base.html
 
 
 def home_view(request):
-    return render(request, 'mainhome.html')
+    return render(request, 'assets/home.html')
 
 
 def projects_view(request):
-    return render(request, 'main/projects.html')
+    return render(request, 'assets/projects.html')
 
 
 def journey_view(request):
-    return render(request, 'main/journey.html')
+    return render(request, 'assets/journey.html')
 
 
 def contact_view(request):
-    return render(request, 'main/Contact.html')
+    return render(request, 'assets/Contact.html')

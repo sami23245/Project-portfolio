@@ -8,8 +8,9 @@
     <link rel="stylesheet" href="{% static 'main/css/style.css' %}"> <!-- #main css file ink -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- projects css file link -->
-    <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
-    {% block extra_css %}{% endblock %}
+    <!-- css for project gallery -->
+     <link rel="stylesheet" href="{% static 'projects/css/project_gallery.css' %}">
+     {% block extra_css %}{% endblock %}
 
 </head>
 <body>
@@ -19,7 +20,7 @@
         <div class="logo"><button class="theme-toggle"onclick="toggleTheme()">🌓</button></div>
         <ul class="nav-links">
             <li><a href="{% url 'home' %}">Home</a></li>
-            <li><a href="{% url 'projects' %}">Projects</a></li>
+            <li><a href="{% url 'projects_list' %}">Projects</a></li>
             <li><a href="{% url 'journey' %}">Journey</a></li>
             <li><a href="{% url 'contact' %}">Contact</a></li>
         </ul>

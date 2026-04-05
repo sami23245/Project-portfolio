@@ -1,153 +1,90 @@
-/* ==========================================================================
-   PROJECT ARCHIVE STYLES
-   ========================================================================== */
-
-.projects-page {
-    padding-top: 120px; /* Space for the floating navbar */
-    background: var(--bg-primary);
+:root {
+    --card-bg: #0f0f11;
+    --accent-orange: #ff6600;
+    --text-dim: #b3b3b3;
+    --link-purple: #6366f1;
 }
 
-.projects-hero {
-    text-align: center;
-    margin-bottom: 50px;
-}
-
-.subtitle {
-    color: var(--text-dim);
-    margin-top: 10px;
-    letter-spacing: 1px;
-}
-
-.projects-container {
-    max-width: 1400px;
+/* THE 3-COLUMN GRID */
+.project-mission-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* FORCES 3 CARDS PER ROW */
+    gap: 30px;
+    padding: 60px 0;
+    max-width: 1300px;
     margin: 0 auto;
 }
 
-/* Grid Layout */
-.project-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 30px;
-    padding: 0 8% 80px 8%;
-}
-
-/* Card Design */
-.project-card {
-    border-radius: 20px;
-    overflow: hidden;
-    transition: all 0.4s ease;
+/* THE PROJECT CARD NODE */
+.project-node {
+    background: var(--card-bg);
     border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 24px;
+    padding: 30px;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 100%;
 }
 
-.project-card:hover {
+.project-node:hover {
     transform: translateY(-10px);
-    border-color: var(--accent);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+    border-color: rgba(255, 102, 0, 0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
 }
 
-/* Image Section */
-.project-img-wrapper {
-    position: relative;
-    height: 220px;
+/* IMAGE AS AN ICON REPLACEMENT */
+.project-node-img-wrapper {
+    width: 80px;  /* Sizing it like an icon from your screenshot */
+    height: 80px;
+    margin-bottom: 25px;
+    border-radius: 12px;
     overflow: hidden;
+    border: 2px solid var(--accent-orange);
+    box-shadow: 0 0 15px rgba(255, 102, 0, 0.2);
 }
 
-.project-img-wrapper img {
+.project-node-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s ease;
 }
 
-.project-card:hover .project-img-wrapper img {
-    transform: scale(1.1);
-}
-
-.project-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 15px;
-    background: linear-gradient(transparent, rgba(0,0,0,0.8));
-}
-
-.tag {
-    background: var(--accent);
-    color: #fff;
-    font-size: 0.7rem;
-    padding: 4px 10px;
-    border-radius: 5px;
-    margin-right: 5px;
+/* TEXT & LINKS */
+.project-node h3 {
+    color: #ffffff;
+    font-size: 1.4rem;
     font-weight: 700;
+    margin-bottom: 12px;
 }
 
-/* Info Section */
-.project-info {
-    padding: 25px;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.project-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 15px;
-}
-
-.project-meta h3 {
-    font-size: 1.3rem;
-    color: var(--text-main);
-}
-
-.star-rating {
-    color: var(--accent);
-    font-size: 0.8rem;
-}
-
-.rating-num {
-    color: var(--text-dim);
-    margin-left: 5px;
-}
-
-.project-desc {
+.project-node p {
     color: var(--text-dim);
     font-size: 0.95rem;
     line-height: 1.6;
     margin-bottom: 25px;
+    flex-grow: 1;
 }
 
-/* Footer Links */
-.project-footer {
-    margin-top: auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.link-icon {
-    font-size: 1.4rem;
-    color: var(--text-dim);
-    margin-right: 15px;
-    transition: color 0.3s;
-}
-
-.link-icon:hover {
-    color: var(--accent);
-}
-
-.btn-details {
-    color: var(--accent);
+.project-node-link {
+    color: var(--link-purple);
     text-decoration: none;
     font-weight: 600;
     font-size: 0.9rem;
-    transition: letter-spacing 0.3s;
+    transition: opacity 0.2s;
 }
 
-.btn-details:hover {
-    letter-spacing: 1px;
+.project-node-link:hover {
+    text-decoration: underline;
+    opacity: 0.8;
+}
+
+/* MOBILE FIX */
+@media (max-width: 992px) {
+    .project-mission-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 650px) {
+    .project-mission-grid { grid-template-columns: 1fr; }
 }
