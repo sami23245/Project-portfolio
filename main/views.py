@@ -1,5 +1,6 @@
 from django.shortcuts import render
 
+
 # Create your views here.
 
 def home(request):#for testing and view base.html
@@ -18,3 +19,6 @@ def journey_view(request):
 
 def contact_view(request):
     return render(request, 'assets/Contact.html')
+
+
+
