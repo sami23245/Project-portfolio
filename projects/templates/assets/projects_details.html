@@ -1,75 +1,302 @@
 {% extends 'base.html' %}
 {% load static %}
+
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'projects/css/project_detail_style.css' %}">
-{% endblock  %}
+<link rel="stylesheet" href="{% static 'projects/css/project_deatail_style.css' %}">
+{% endblock %}
 
 {% block content %}
-<div class="container mt-5 pt-5"> 
-    <div class="glass-card p-5">
-        <h1 class="text-orange text-uppercase">{{ project.title }}</h1>
-        
-        
-        <div class="row">
-            <div class="col-md-6">
-                {% if project.image %}
-                <img src="{{ project.image.url }}" class="img-fluid rounded border-glow" alt="{{ project.title }}">
-                {% endif %}
+<main class="pd-main">
+
+    <!-- SCANLINE OVERLAY -->
+    <div class="scanline-overlay"></div>
+
+    <!-- HEADER NODE -->
+    <header class="pd-header">
+        <div class="pd-header-inner">
+            <div class="pd-breadcrumb">
+                <a href="{% url 'project_list' %}" class="pd-breadcrumb-link">◀ ARCHIVE</a>
+                <span class="pd-breadcrumb-sep">/</span>
+                <span class="pd-breadcrumb-current">{{ project.title|upper }}</span>
             </div>
-            <div class="col-md-6">
-                <h3 class="text-orange">Project Intelligence</h3>
-                <p class="lead text-light">{{ project.description }}</p>
-                <div class="tech-stack mt-3">
-                    <span class="badge badge-outline-orange">Backend: Django</span>
-                    <span class="badge badge-outline-orange">Database: MySQL</span>
+            <h1 class="pd-title">{{ project.title }}</h1>
+            <div class="pd-meta-row">
+                <div class="pd-rating-badge">
+                    <span class="pd-rating-stars">
+                        {% for i in "12345"|make_list %}
+                            {% if forloop.counter <= project.avg_rating %}
+                                <span class="ps-filled">★</span>
+                            {% else %}
+                                <span class="ps-empty">★</span>
+                            {% endif %}
+                        {% endfor %}
+                    </span>
+                    <span class="pd-rating-num">{{ project.avg_rating|floatformat:1 }} / 5.0</span>
                 </div>
+                <div class="pd-stack-badge">
+                    <span class="pd-stack-icon">⬡</span>
+                    {{ project.tech_stack }}
+                </div>
+            </div>
+        </div>
+        <!-- Corner decorations -->
+        <span class="pd-corner pd-corner-tl"></span>
+        <span class="pd-corner pd-corner-tr"></span>
+        <span class="pd-corner pd-corner-bl"></span>
+        <span class="pd-corner pd-corner-br"></span>
+    </header>
+
+    <!-- IMAGE SLIDER -->
+    <div class="pd-slider-wrap">
+        <div class="pd-slider-label">// VISUAL_SYSTEMS</div>
+        <div class="pd-slider-viewport">
+            <div class="pd-slider-track">
+                {% for item in project.images.all %}
+                    <img src="{{ item.image.url }}" alt="Project Visual" class="pd-slide-img">
+                {% endfor %}
+                {% for item in project.images.all %}
+                    <img src="{{ item.image.url }}" alt="Project Visual" class="pd-slide-img">
+                {% endfor %}
             </div>
         </div>
     </div>
 
-    <div class="glass-card p-4 mb-5">
-        <h4 class="text-orange mb-4">Post a Review</h4>
-        <form method="POST">
-            {% csrf_token %}
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label class="text-light">Name</label>
-                    {{ form.user_name }}
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label class="text-light">Rating (1-5)</label>
-                    {{ form.rating }}
-                </div>
-            </div>
-            <div class="mb-3">
-                <label class="text-light">Comment</label>
-                {{ form.comment }}
-            </div>
-            <button type="submit" class="btn btn-cyber-orange w-100">SUBMIT DATA</button>
-        </form>
-    </div>
+    <!-- CONTENT GRID -->
+    <div class="pd-content-grid">
 
-    <div class="reviews-section">
-        <h4 class="text-light mb-4">Feedback Archive</h4>
-        {% for review in project.reviews.all %}
-        <div class="glass-card p-3 mb-3 border-left-orange">
-            <div class="d-flex justify-content-between">
-                <strong class="text-orange">{{ review.user_name }}</strong>
-                <span class="stars">
-                    {% for i in "12345" %}
-                        {% if forloop.counter <= review.rating %}
-                            <i class="fas fa-star text-orange"></i>
-                        {% else %}
-                            <i class="far fa-star text-muted"></i>
-                        {% endif %}
+        <!-- LEFT: PRIMARY CONTENT -->
+        <div class="pd-primary">
+
+            <!-- DESCRIPTION -->
+            <section class="pd-section">
+                <div class="pd-section-header">
+                    <span class="pd-section-tag">// MISSION_BRIEF</span>
+                    <span class="pd-section-line"></span>
+                </div>
+                <p class="pd-description">{{ project.description }}</p>
+            </section>
+
+            <!-- FEEDBACK LOGS -->
+            <section class="pd-section">
+                <div class="pd-section-header">
+                    <span class="pd-section-tag">// FEEDBACK_LOGS</span>
+                    <span class="pd-section-line"></span>
+                    <span class="pd-review-count">{{ project.reviews.count }} ENTRIES</span>
+                </div>
+
+                <div class="pd-reviews-list">
+                    {% for review in reviews %}
+                    <div class="pd-review-card">
+                        <div class="pd-review-top">
+                            <div class="pd-review-avatar">{{ review.user_name|first|upper }}</div>
+                            <div class="pd-review-info">
+                                <span class="pd-review-name">{{ review.user_name }}</span>
+                                <span class="pd-review-date">{{ review.created_at|date:"d M Y" }}</span>
+                            </div>
+                            <div class="pd-review-stars">
+                                {% for i in "12345"|make_list %}
+                                    {% if forloop.counter <= review.rating %}
+                                        <span class="ps-filled">★</span>
+                                    {% else %}
+                                        <span class="ps-empty">★</span>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <p class="pd-review-comment">{{ review.comment }}</p>
+                        <div class="pd-review-corner"></div>
+                    </div>
+                    {% empty %}
+                    <div class="pd-empty-state">
+                        <span class="pd-empty-icon">◈</span>
+                        <span class="pd-empty-text">[ NO_FEEDBACK_DETECTED ]</span>
+                        <span class="pd-empty-sub">Be the first to transmit a report.</span>
+                    </div>
                     {% endfor %}
-                </span>
-            </div>
-            <p class="text-light mt-2 mb-0 italic">"{{ review.comment }}"</p>
+                </div>
+            </section>
+
+            <!-- SUBMIT FORM -->
+            <section class="pd-section" id="feedback-form">
+                <div class="pd-section-header">
+                    <span class="pd-section-tag">// TRANSMIT_FEEDBACK</span>
+                    <span class="pd-section-line"></span>
+                </div>
+
+                <form method="POST" action="" class="pd-form">
+                    {% csrf_token %}
+
+                    <!-- Name -->
+                    <div class="pd-field">
+                        <label class="pd-field-label">OPERATIVE_NAME</label>
+                        <div class="pd-input-wrap">
+                            <input
+                                type="text"
+                                name="user_name"
+                                class="pd-input"
+                                placeholder="Enter your name..."
+                                value="{{ form.user_name.value|default:'' }}"
+                                required
+                                autocomplete="off"
+                            >
+                            <span class="pd-input-border"></span>
+                        </div>
+                        {% if form.user_name.errors %}
+                            <span class="pd-field-error">⚠ {{ form.user_name.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+
+                    <!-- Star Rating -->
+                    <div class="pd-field">
+                        <label class="pd-field-label">MISSION_RATING</label>
+                        <div class="pd-star-row" id="starSelector">
+                            <span class="pd-star" data-value="1">★</span>
+                            <span class="pd-star" data-value="2">★</span>
+                            <span class="pd-star" data-value="3">★</span>
+                            <span class="pd-star" data-value="4">★</span>
+                            <span class="pd-star" data-value="5">★</span>
+                            <span class="pd-star-label" id="starLabel">5 / 5</span>
+                        </div>
+                        <input type="hidden" name="rating" id="ratingInput" value="5">
+                        {% if form.rating.errors %}
+                            <span class="pd-field-error">⚠ {{ form.rating.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+
+                    <!-- Comment -->
+                    <div class="pd-field">
+                        <label class="pd-field-label">FIELD_REPORT</label>
+                        <div class="pd-input-wrap">
+                            <textarea
+                                name="comment"
+                                class="pd-textarea"
+                                placeholder="Transmit your assessment of this mission..."
+                                rows="5"
+                                required
+                            >{{ form.comment.value|default:'' }}</textarea>
+                            <span class="pd-input-border"></span>
+                        </div>
+                        {% if form.comment.errors %}
+                            <span class="pd-field-error">⚠ {{ form.comment.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="pd-form-footer">
+                        <span class="pd-form-note">// ENCRYPTED_TRANSMISSION</span>
+                        <button type="submit" class="pd-submit-btn">
+                            <span class="pd-btn-arrow">▶</span>
+                            TRANSMIT_FEEDBACK
+                        </button>
+                    </div>
+                </form>
+            </section>
+
         </div>
-        {% empty %}
-        <p class="text-muted">No feedback data found for this entry.</p>
-        {% endfor %}
+
+        <!-- RIGHT: SIDEBAR -->
+        <aside class="pd-sidebar">
+
+            <!-- MISSION CONTROL PANEL -->
+            <div class="pd-panel">
+                <div class="pd-panel-header">
+                    <span class="pd-panel-tag">MISSION_CONTROL</span>
+                </div>
+                <div class="pd-panel-body">
+                    {% if project.live_link %}
+                    <a href="{{ project.live_link }}" target="_blank" class="pd-action-btn pd-action-primary">
+                        <span>▶</span> LAUNCH_DEMO
+                    </a>
+                    {% endif %}
+                    {% if project.github_link %}
+                    <a href="{{ project.github_link }}" target="_blank" class="pd-action-btn pd-action-secondary">
+                        <span>⌥</span> VIEW_SOURCE
+                    </a>
+                    {% endif %}
+                    <a href="#feedback-form" class="pd-action-btn pd-action-ghost">
+                        <span>✦</span> SUBMIT_REVIEW
+                    </a>
+                    <a href="{% url 'project_list' %}" class="pd-action-btn pd-action-ghost">
+                        <span>◀</span> BACK_TO_ARCHIVE
+                    </a>
+                </div>
+                <span class="pd-panel-corner pd-panel-corner-br"></span>
+            </div>
+
+            <!-- TECH STACK -->
+            <div class="pd-panel">
+                <div class="pd-panel-header">
+                    <span class="pd-panel-tag">TECH_STACK</span>
+                </div>
+                <div class="pd-panel-body pd-tech-list">
+                    {% for tech in project.tech_stack.split %}
+                    <span class="pd-tech-tag">{{ tech }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- STATS PANEL -->
+            <div class="pd-panel">
+                <div class="pd-panel-header">
+                    <span class="pd-panel-tag">SYSTEM_STATS</span>
+                </div>
+                <div class="pd-panel-body">
+                    <div class="pd-stat-row">
+                        <span class="pd-stat-label">TOTAL_REVIEWS</span>
+                        <span class="pd-stat-value">{{ project.reviews.count }}</span>
+                    </div>
+                    <div class="pd-stat-row">
+                        <span class="pd-stat-label">AVG_RATING</span>
+                        <span class="pd-stat-value">{{ project.avg_rating|floatformat:1 }}</span>
+                    </div>
+                    <div class="pd-stat-row">
+                        <span class="pd-stat-label">DEPLOYED</span>
+                        <span class="pd-stat-value">{{ project.created_at|date:"Y" }}</span>
+                    </div>
+                    <!-- Rating bar -->
+                    <div class="pd-rating-bar-wrap">
+                        <div class="pd-rating-bar">
+                            <div class="pd-rating-fill" data-fill-width="{{ project.avg_rating|floatformat:0 }}0%"></div>
+                        </div>
+                        <span class="pd-rating-bar-label">{{ project.avg_rating|floatformat:1 }} / 5.0</span>
+                    </div>
+                </div>
+            </div>
+
+        </aside>
     </div>
-</div>
+</main>
+
+<script>
+(function() {
+    const stars = document.querySelectorAll('.pd-star');
+    const input = document.getElementById('ratingInput');
+    const label = document.getElementById('starLabel');
+
+    function highlight(val) {
+        stars.forEach(s => {
+            const v = parseInt(s.dataset.value);
+            s.classList.toggle('pd-star-active', v <= val);
+            s.classList.toggle('pd-star-inactive', v > val);
+        });
+        label.textContent = val + ' / 5';
+    }
+
+    highlight(5);
+
+    stars.forEach(s => {
+        s.addEventListener('click', () => {
+            const val = parseInt(s.dataset.value);
+            input.value = val;
+            highlight(val);
+        });
+        s.addEventListener('mouseover', () => highlight(parseInt(s.dataset.value)));
+        s.addEventListener('mouseout', () => highlight(parseInt(input.value)));
+    });
+
+    document.querySelectorAll('.pd-rating-fill').forEach(el => {
+        const pct = el.dataset.fillWidth;
+        if (pct) el.style.width = pct;
+    });
+})();
+</script>
 {% endblock %}

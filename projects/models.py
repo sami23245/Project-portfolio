@@ -6,7 +6,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 class Project(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
-    image = models.ImageField(upload_to='projects/static/projects/images/')
+    image = models.ImageField(upload_to='Peoject_Images/', blank=True, null=True)
     tech_stack = models.CharField(max_length=300, help_text="e.g. Django, Python, MySQL")
     github_link = models.URLField(blank=True)
     live_link = models.URLField(blank=True)
@@ -21,6 +21,17 @@ class Project(models.Model):
         if reviews.exists():
             return sum(r.rating for r in reviews) / reviews.count()
         return 0
+
+    def avg_rating(self):
+        ratings = self.reviews.all().values_list('rating', flat=True)
+        return sum(ratings) / len(ratings) if ratings else 0
+
+
+
+class project_images(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to='Project_Images/')
+
 
 class Review(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='reviews')

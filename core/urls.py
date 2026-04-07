@@ -22,7 +22,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('main.urls')), # Your home/nav logic
-    path('projects', include('projects.urls')), # Your new automated projects logic
+    path('projects/', include('projects.urls')), # Your new automated projects logic
 ]
 
 # This is CRITICAL for showing project images
