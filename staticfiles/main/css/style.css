@@ -1,0 +1,490 @@
+/* ==========================================================================
+   1. THEME VARIABLES & RESET
+   ========================================================================== */
+:root {
+    /* Night Theme (Default: Black & Orange) */
+    --bg-primary: #08080a;
+    --bg-secondary: #111114;
+    --text-main: #ffffff;
+    --text-dim: #a1a1aa;
+    --accent: #ff6b00; /* Cyber Orange */
+    --nav-glass: rgba(15, 15, 20, 0.8);
+    --border: rgba(255, 255, 255, 0.1);
+    --card-shadow: rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="day"] {
+    /* Day Theme (White & Blue) */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f1f5f9;
+    --text-main: #0f172a;
+    --text-dim: #475569;
+    --accent: #2563eb; /* Royal Blue */
+    --nav-glass: rgba(255, 255, 255, 0.8);
+    --border: rgba(0, 0, 0, 0.1);
+    --card-shadow: rgba(0, 0, 0, 0.05);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    transition: background 0.3s ease, color 0.3s ease, border 0.3s ease;
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-main);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* --- GLOBAL LAYOUT FIX --- */
+body {
+    /* Adjust '80px' to match the actual height of your Navbar */
+    padding-top: 80px; 
+}
+/* ==========================================================================
+   2. REUSABLE COMPONENTS
+   ========================================================================== */
+.glass {
+    background: var(--bg-secondary);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    box-shadow: 0 8px 32px 0 var(--card-shadow);
+}
+
+.btn-action {
+    position: relative;
+    display: inline-block;
+    background: var(--accent);
+    color: #ffffff;
+    padding: 16px 36px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 700;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 10px 20px -5px var(--accent);
+}
+
+.btn-action:hover {
+    transform: scale(1.05);
+    letter-spacing: 1px;
+    box-shadow: 0 0 0 15px rgba(255, 107, 0, 0); /* Pulse effect hook */
+}
+
+.btn-shine {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: all 0.6s;
+}
+
+.btn-action:hover .btn-shine {
+    left: 100%;
+}
+
+/* ==========================================================================
+   3. NAVIGATION
+   ========================================================================== */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 10%;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: var(--nav-glass);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+}
+/* ==========================================================================
+   3. NAVIGATION (GLASSMORPHISM)
+   ========================================================================== */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    /* Shape and Position */
+    width: 90%;            /* This "cuts" the sides */
+    max-width: 1200px;     /* Prevents it from getting too wide on large screens */
+    margin: 20px auto;     /* Centers it and pushes it down from the top */
+    padding: 0.8rem 3rem;
+    border-radius: 50px;   /* Creates the pill shape */
+    
+    /* Glassmorphism & Behavior */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;              /* Required for margin: auto to work with fixed positioning */
+    z-index: 2000;
+    background: rgba(15, 15, 20, 0.8);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+}
+
+.nav-logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-main);
+    text-decoration: none;
+    letter-spacing: -1px;
+}
+
+.nav-logo span {
+    color: var(--accent); /* Your Cyber Orange */
+}
+
+.nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--accent);
+    text-shadow: 0 0 10px rgba(255, 107, 0, 0.3);
+}
+
+/* Active Link State */
+.nav-links a.active {
+    color: var(--text-main);
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 5px;
+}
+
+/* Mobile Responsive Navbar */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 1rem 5%;
+    }
+    .nav-links {
+        display: none; /* Usually replaced by a burger menu on mobile */
+    }
+}
+
+
+/* Optional: Slight shrink effect on scroll (if you add JS later) */
+.navbar.scrolled {
+    width: 85%;
+    margin-top: 10px;
+    background: rgba(10, 10, 12, 0.95);
+}
+
+/* ==========================================================================
+   4. BANNER HERO SECTION
+   ========================================================================== */
+.banner-hero {
+    margin: 40px 5%;
+    padding: 60px 5%;
+    border-radius: 100px; /* Reference: image_994a3e.jpg */
+}
+
+.banner-container {
+    display: flex;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 3rem;
+}
+
+.banner-profile-circle {
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 5px solid var(--accent);
+    flex-shrink: 0;
+}
+
+.banner-profile-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.banner-greeting {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 400;
+}
+
+.accent-name {
+    font-weight: 700;
+}
+
+.banner-footer {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.banner-socials {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 1.2rem;
+}
+
+.banner-socials a { color: var(--text-main); }
+
+.center-action-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: 40px 0 80px 0;
+}
+
+/* ==========================================================================
+   5. WHO AM I & SKILLS
+   ========================================================================== */
+.skills-summary {
+    margin: 40px 10%;
+    padding: 4rem;
+    border-radius: 24px;
+}
+
+.skills-content {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.section-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: var(--accent);
+    margin-bottom: 1rem;
+}
+
+.progress-bg {
+    height: 10px;
+    background: rgba(128, 128, 128, 0.1);
+    border-radius: 20px;
+    margin-top: 8px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 20px;
+    box-shadow: 0 0 10px var(--accent);
+}
+/* ============================ */
+/* do not delete this comment, it is used as a reference point for code insertion in the future */
+/* ============================ */
+.skill-item {
+    margin-bottom: 2rem; /* Adds space between the different bars */
+}
+
+.skill-info {
+    display: flex;
+    justify-content: space-between; /* Pushes Name to left, % to right */
+    align-items: center;
+    margin-bottom: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+/* Optional: Make the percentage stand out */
+.skill-info span:last-child {
+    color: var(--accent);
+    font-family: 'Courier New', Courier, monospace; /* Tech look */
+}
+/* ==========================================================================
+   SUMMARY MATRIX - FINAL STYLING
+   ========================================================================== */
+
+.summary-matrix {
+    display: grid;
+    /* This creates 3 equal columns on desktop */
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 2rem;
+    padding: 60px 10%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.matrix-card {
+    padding: 3rem 2rem;
+    text-align: center;
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between; /* Keeps button at the bottom */
+    min-height: 400px; /* Balanced height */
+    transition: transform 0.4s ease, border-color 0.4s ease;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.matrix-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--accent);
+    background: rgba(255, 255, 255, 0.02); /* Subtle highlight */
+}
+
+.matrix-icon {
+    font-size: 2.5rem;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+}
+
+.matrix-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-main);
+}
+
+.matrix-card p {
+    font-size: 1rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    flex-grow: 1; /* Pushes button down if text is short */
+}
+
+/* Button sizing for inside cards */
+.matrix-card .btn-action {
+    width: 100%;
+    padding: 12px 0;
+    font-size: 0.9rem;
+    border-radius: 12px;
+}
+
+/* RESPONSIVE: Stack cards on mobile */
+@media (max-width: 1024px) {
+    .summary-matrix {
+        grid-template-columns: 1fr;
+        padding: 40px 5%;
+    }
+    
+    .matrix-card {
+        min-height: auto;
+    }
+}
+
+
+/* ==========================================================================
+   7. RESPONSIVE DESIGN
+   ========================================================================== */
+@media (max-width: 1024px) {
+    .banner-container, .skills-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    .banner-hero { border-radius: 40px; }
+    .banner-footer { justify-content: center; }
+}
+
+/* ==========================================================================
+   8. MAIN FOOTER
+   ========================================================================== */
+
+.main-footer {
+    margin-top: 80px;
+    padding: 60px 10% 20px 10%;
+    border-top: 1px solid var(--border);
+    border-radius: 40px 40px 0 0; /* Curvy top to match your hero */
+}
+
+.footer-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1.5fr;
+    gap: 4rem;
+    margin-bottom: 40px;
+}
+
+.footer-logo {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 1rem;
+}
+
+.accent-dot { color: var(--accent); }
+
+.footer-section h4 {
+    color: var(--accent);
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+}
+
+.footer-section ul { list-style: none; }
+
+.footer-section ul li { margin-bottom: 0.8rem; }
+
+.footer-section ul li a {
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover { color: var(--accent); }
+
+.footer-icons {
+    display: flex;
+    gap: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.social-icon {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-main);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 1px solid var(--border);
+}
+
+.social-icon:hover {
+    background: var(--accent);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(255, 107, 0, 0.2);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 40px;
+    border-top: 1px solid var(--border);
+    color: var(--text-dim);
+    font-size: 0.85rem;
+}
+
+/* Responsive Footer */
+@media (max-width: 900px) {
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+    }
+    .footer-icons { justify-content: center; }
+}
+

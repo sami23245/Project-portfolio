@@ -1,0 +1,159 @@
+/* ==========================================================================
+   PROJECT ARCHIVE - THEME AWARE CSS
+   ========================================================================== */
+
+
+
+/* ==========================================================================
+   THEME-AWARE PROJECT ARCHIVE (DATA-ATTRIBUTE VERSION)
+   ========================================================================== */
+
+:root {
+    /* DEFAULT THEME (Day / Light) */
+    --bg-page: #f0f4f8; 
+    --bg-card: #ffffff;
+    --text-primary: #1a202c;
+    --text-secondary: #4a5568;
+    --border-color: rgba(0, 0, 0, 0.1);
+    --accent-orange: #ff6600;
+    --gradient-overlay: linear-gradient(to top, #ffffff 10%, rgba(255, 255, 255, 0.4) 80%, transparent);
+}
+
+/* THE FIX: Select the body when data-theme is set to "night" */
+body[data-theme="night"] {
+    --bg-page: #0a0a0c;
+    --bg-card: #111114;
+    --text-primary: #ffffff;
+    --text-secondary: #b3b3b3;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --accent-orange: #ff6600;
+    --gradient-overlay: linear-gradient(to top, #0a0a0c 10%, rgba(10, 10, 12, 0.6) 80%, transparent);
+}
+
+/* APPLY TO YOUR PAGE ELEMENTS */
+.mission-page {
+    background-color: var(--bg-page);
+    color: var(--text-primary);
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+.mission-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+}
+
+.card-overlay {
+    background: var(--gradient-overlay);
+}
+
+/* Add this to ensure the "Mission Log" text changes color too */
+.mission-page h1 {
+    color: var(--text-primary);
+}
+
+.mission-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* FORCED 3-GRID */
+    gap: 40px;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+/* THE FIXED CARD FRAME */
+.mission-card {
+    position: relative;
+    height: 450px; /* FIXED HEIGHT */
+    border-radius: 30px;
+    overflow: hidden;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.mission-card:hover {
+    transform: translateY(-12px);
+    border-color: var(--accent-orange);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+}
+
+/* IMAGE BACKGROUND HANDLING */
+.card-bg-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.card-bg-layer img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* ENSURES NO STRETCHING */
+    transition: transform 0.7s ease;
+}
+
+.mission-card:hover .card-bg-layer img {
+    transform: scale(1.15);
+}
+
+/* THE OVERLAY (THEME AWARE) */
+.card-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    background: var(--gradient-overlay);
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+/* TYPOGRAPHY */
+.mission-card h3 {
+    font-family: 'Orbitron', sans-serif;
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.mission-card p {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    margin-bottom: 24px;
+    /* Keeps description height consistent */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.mission-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border-color);
+    padding-top: 16px;
+}
+
+.explore-link {
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    transition: color 0.3s;
+}
+
+.explore-link:hover {
+    color: var(--accent-orange);
+}
+
+/* RESPONSIVE FIX */
+@media (max-width: 1024px) {
+    .mission-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+    .mission-grid { grid-template-columns: 1fr; }
+}
