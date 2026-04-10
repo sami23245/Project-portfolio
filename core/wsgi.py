@@ -14,4 +14,4 @@ from django.core.wsgi import get_wsgi_application
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
 
 application = get_wsgi_application()
-WSGI_APPLICATION = 'project_name.wsgi.application'
+WSGI_APPLICATION = 'portfolio.wsgi.application'
